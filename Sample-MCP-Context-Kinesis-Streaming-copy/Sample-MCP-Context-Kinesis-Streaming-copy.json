@@ -1,0 +1,46 @@
+{
+  "name" : "Sample-MCP-Context-Kinesis-Streaming-copy",
+  "jobMode" : "SCRIPT",
+  "description" : "",
+  "role" : "arn:aws:iam::163200642413:role/service-role/AWSGlueServiceRole-datalake",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "gluestreaming",
+    "scriptLocation" : "s3://aws-glue-assets-163200642413-us-west-2/scripts/Sample-MCP-Context-Kinesis-Streaming-copy.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-glue-datacatalog" : "true",
+    "spark.sql.catalog.spark_catalog" : "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--datalake-formats" : "delta",
+    "--TempDir" : "s3://azuga-udpdp-deltalake/RDS-DMS-Kinesis-S3-migration/alert-report-replication/",
+    "--enable-metrics" : "true",
+    "--extra-py-files" : "s3://aws-glue-studio-transforms-818035625594-prod-us-west-2/gs_common.py,s3://aws-glue-studio-transforms-818035625594-prod-us-west-2/gs_flatten.py",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-163200642413-us-west-2/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "spark.sql.extensions" : "io.delta.sql.DeltaSparkSessionExtension",
+    "--additional-python-modules" : "fastavro",
+    "--enable-observability-metrics" : "false",
+    "--conf" : "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog --conf spark.delta.logStore.class=org.apache.spark.sql.delta.storage.S3SingleDriverLogStore --conf spark.sql.streaming.schemaInference=true",
+    "--additonal-python-modules" : "pymongo==4.10.1",
+    "--job-language" : "python",
+    "--enable-auto-scaling" : "true",
+    "spark.dynamicAllocation.enabled" : "true"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 0,
+  "maxCapacity" : 0.5,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.025X",
+  "executionClass" : "STANDARD",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "ETL_DL_Ingestion",
+    "branch" : "FLEET-42544",
+    "folder" : "Sample-MCP-Context-Kinesis-Streaming-copy"
+  }
+}
