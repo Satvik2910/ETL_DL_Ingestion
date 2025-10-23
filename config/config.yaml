@@ -1,0 +1,8 @@
+api_base_url: "https://external.driver.api"
+pagination_size: 100
+max_retries: 3
+cache_ttl: 600
+mcp_tool_server_url: "http://localhost:8081/mcp-tools"
+required_fields:
+  - "driver_id"
+  - "name"
