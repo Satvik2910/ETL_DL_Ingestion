@@ -1,0 +1,24 @@
+# Core FastAPI and async HTTP dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+httpx==0.25.2
+
+# Configuration and validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+PyYAML==6.0.1
+
+# Caching (Redis is optional)
+redis==5.0.1
+
+# Development and testing (optional)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-httpx==0.26.0
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Production deployment (optional)
+gunicorn==21.2.0

@@ -1,0 +1,39 @@
+# Driver Insight Agent Configuration
+api:
+  base_url: "https://external.driver.api"
+  pagination_size: 100
+  max_retries: 3
+  timeout: 30
+  retry_delay: 1.0
+
+cache:
+  ttl: 600  # Time to live in seconds (10 minutes)
+  type: "memory"  # Options: "memory", "redis"
+  redis_url: "redis://localhost:6379/0"  # Only used if type is "redis"
+  max_size: 1000  # Maximum number of cached items for memory cache
+
+mcp_tools:
+  server_url: "http://localhost:8081/mcp-tools"
+  timeout: 10
+  max_retries: 2
+
+validation:
+  required_fields:
+    - "driver_id"
+    - "name"
+  optional_fields:
+    - "vehicle"
+    - "rating"
+    - "status"
+    - "location"
+
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "json"  # Options: json, text
+  file: null  # Set to file path to enable file logging
+
+server:
+  host: "0.0.0.0"
+  port: 8080
+  debug: false
+  workers: 1

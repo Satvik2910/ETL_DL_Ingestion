@@ -1,0 +1,73 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/drivers/.*"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": {
+        "driver_id": "D12345",
+        "name": "John Doe",
+        "vehicle": "Tesla Model Y",
+        "rating": 4.8,
+        "status": "active",
+        "location": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "total_trips": 234,
+        "last_active": "2025-10-23T09:10:00Z"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/drivers/batch"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": {
+        "drivers": [
+          {
+            "driver_id": "D12345",
+            "name": "John Doe",
+            "vehicle": "Tesla Model Y",
+            "rating": 4.8,
+            "status": "active"
+          },
+          {
+            "driver_id": "D12346",
+            "name": "Jane Smith",
+            "vehicle": "Toyota Prius",
+            "rating": 4.6,
+            "status": "active"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/health"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": {
+        "status": "healthy",
+        "timestamp": "2025-10-23T09:10:00Z"
+      }
+    }
+  }
+]

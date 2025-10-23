@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # Driver Insight Agent service
+  driver-insight-agent:
+    build:
+      context: .
+      target: development
+    ports:
+      - "8080:8080"
+    environment:
+      - DIA_LOGGING__LEVEL=INFO
+      - DIA_CACHE__TYPE=redis
+      - DIA_CACHE__REDIS_URL=redis://redis:6379/0
+      - DIA_MCP_TOOLS__SERVER_URL=http://mcp-tool-server:8081/mcp-tools
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - mcp-tool-server
+    networks:
+      - driver-insight-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8080/health/simple')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis cache service
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - driver-insight-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MCP Tool Server (example implementation)
+  mcp-tool-server:
+    build:
+      context: .
+      dockerfile: examples/mcp-tool-server/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - LOG_LEVEL=INFO
+    networks:
+      - driver-insight-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8081/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # External API mock (for development/testing)
+  mock-driver-api:
+    image: mockserver/mockserver:5.15.0
+    ports:
+      - "8082:1080"
+    environment:
+      - MOCKSERVER_PROPERTY_FILE=/config/mockserver.properties
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=/config/expectations.json
+    volumes:
+      - ./examples/mock-api:/config
+    networks:
+      - driver-insight-network
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  driver-insight-network:
+    driver: bridge
