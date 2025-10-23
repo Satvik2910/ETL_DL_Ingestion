@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Driver Insight Agent Service
+  driver-insight-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: driver-insight-agent
+    ports:
+      - "8080:8080"
+    environment:
+      - API_BASE_URL=https://external.driver.api
+      - CACHE_TYPE=redis
+      - CACHE_ENABLED=true
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MCP_TOOL_SERVER_URL=http://mcp-tool-server:8081/mcp-tools
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    depends_on:
+      - redis
+      - mcp-tool-server
+    networks:
+      - driver-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: driver-insight-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - driver-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # MCP Tool Server (Example)
+  mcp-tool-server:
+    build:
+      context: ./mcp_tool_server
+      dockerfile: Dockerfile
+    container_name: mcp-tool-server
+    ports:
+      - "8081:8081"
+    environment:
+      - LOG_LEVEL=INFO
+    networks:
+      - driver-network
+    restart: unless-stopped
+
+networks:
+  driver-network:
+    driver: bridge
+
+volumes:
+  redis-data:
