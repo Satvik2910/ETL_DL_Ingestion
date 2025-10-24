@@ -1,0 +1,51 @@
+# Driver Insight Agent Configuration
+
+# Cache Configuration
+cache:
+  ttl_seconds: 3600  # 1 hour default TTL
+  max_size: 1000     # Maximum number of cached entries
+  enable_persistent: true
+  persistent_path: "./cache_storage"
+
+# Concurrency Configuration
+concurrency:
+  max_workers: 10
+  batch_size: 50
+  timeout_seconds: 30
+
+# Pagination Configuration
+pagination:
+  default_page_size: 100
+  max_page_size: 1000
+
+# Retry Configuration
+retry:
+  max_attempts: 3
+  backoff_base: 2
+  backoff_max: 60
+
+# Summarization Configuration
+summarization:
+  max_tokens: 500
+  enable_compression: true
+
+# Tool Configuration
+tools:
+  driver_tool:
+    enabled: true
+    timeout: 10
+  trip_tool:
+    enabled: true
+    timeout: 30
+  score_tool:
+    enabled: true
+    timeout: 20
+  trend_tool:
+    enabled: true
+    timeout: 45
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"
