@@ -1,0 +1,19 @@
+# Driver Insight Agent configuration
+cache:
+  ttl_seconds: 900
+  persistent_path: "/workspace/driver_insight_agent/.cache/insight_cache.sqlite"
+  namespace: "driver_insight"
+
+concurrency:
+  max_workers: 8
+  batch_size: 100
+
+pagination:
+  page_size: 200
+
+summarization:
+  max_tokens: 512
+
+logging:
+  level: "INFO"
+  json: true
