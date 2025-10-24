@@ -1,0 +1,50 @@
+# Driver Insight Agent Configuration
+
+# Cache Configuration
+cache:
+  ttl_seconds: 3600  # 1 hour default TTL
+  persistent_cache: true
+  redis_url: "redis://localhost:6379/0"
+  max_cache_size: 10000  # Maximum number of cached items
+
+# Execution Configuration
+execution:
+  max_concurrent_requests: 10
+  request_timeout_seconds: 30
+  retry_attempts: 3
+  retry_backoff_multiplier: 2
+  max_retry_delay: 60
+
+# Data Processing Configuration
+data:
+  default_batch_size: 1000
+  max_batch_size: 10000
+  chunk_size: 500
+  max_results_per_request: 50000
+
+# Tool Configuration
+tools:
+  driver_tool:
+    enabled: true
+    timeout: 10
+  trip_tool:
+    enabled: true
+    timeout: 15
+  score_tool:
+    enabled: true
+    timeout: 10
+  trend_tool:
+    enabled: true
+    timeout: 20
+
+# Summarization Configuration
+summarization:
+  max_summary_tokens: 2000
+  include_metadata: true
+  compression_ratio: 0.3
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  structured: true
+  include_timestamps: true

@@ -1,0 +1,19 @@
+asyncio
+aiohttp>=3.8.0
+pydantic>=2.0.0
+pyyaml>=6.0
+redis>=4.5.0
+numpy>=1.24.0
+pandas>=2.0.0
+python-dateutil>=2.8.0
+structlog>=23.0.0
+tenacity>=8.2.0
+typing-extensions>=4.5.0
+
+# Development dependencies (optional)
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0

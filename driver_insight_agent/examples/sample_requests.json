@@ -1,0 +1,112 @@
+[
+  {
+    "request_id": "score_analysis_001",
+    "drivers": [
+      {"driver_id": "DRV001"}
+    ],
+    "report_type": "score",
+    "time_range": {
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-01-31T23:59:59Z"
+    },
+    "aggregations": [
+      {
+        "operation": "avg",
+        "field": "score_value",
+        "alias": "average_score"
+      },
+      {
+        "operation": "min",
+        "field": "score_value", 
+        "alias": "min_score"
+      },
+      {
+        "operation": "max",
+        "field": "score_value",
+        "alias": "max_score"
+      }
+    ]
+  },
+  {
+    "request_id": "trip_comparison_002",
+    "drivers": [
+      {"driver_id": "DRV001"},
+      {"driver_id": "DRV002"},
+      {"driver_id": "DRV003"}
+    ],
+    "report_type": "comparison",
+    "time_range": {
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-01-31T23:59:59Z"
+    },
+    "filters": [
+      {
+        "field": "distance_miles",
+        "operator": "gte",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "request_id": "rankings_003",
+    "report_type": "ranking",
+    "time_range": {
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-01-31T23:59:59Z"
+    },
+    "options": {
+      "limit": 10,
+      "score_type": "overall",
+      "include_percentiles": true
+    }
+  },
+  {
+    "request_id": "trend_analysis_004",
+    "drivers": [
+      {"driver_id": "DRV001"}
+    ],
+    "report_type": "trend",
+    "time_range": {
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-01-31T23:59:59Z"
+    },
+    "options": {
+      "metrics": ["overall_score", "safety_score", "efficiency_score"],
+      "aggregation_period": "weekly",
+      "forecast_days": 30
+    }
+  },
+  {
+    "request_id": "combined_analysis_005",
+    "drivers": [
+      {"name": "John Smith"},
+      {"email": "sarah.johnson@example.com"}
+    ],
+    "report_type": "combined",
+    "time_range": {
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-01-31T23:59:59Z"
+    },
+    "filters": [
+      {
+        "field": "status",
+        "operator": "eq",
+        "value": "active"
+      }
+    ],
+    "aggregations": [
+      {
+        "operation": "avg",
+        "field": "score_value",
+        "alias": "avg_score",
+        "group_by": "driver_id"
+      },
+      {
+        "operation": "sum",
+        "field": "distance_miles",
+        "alias": "total_distance",
+        "group_by": "driver_id"
+      }
+    ]
+  }
+]
